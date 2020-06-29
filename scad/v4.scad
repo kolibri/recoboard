@@ -1,14 +1,14 @@
-z_distance = 10;
-xy_distance = 10;
+z_distance = 0;
+xy_distance = 0;
 
 show_ground = false;
-show_rc522 = true;
+show_rc522 = false;
 show_top = false;
 
-show_bottom_left = true;
-show_bottom_right = true;
-show_top_left = true;
-show_top_right = true;
+show_bottom_left = false;
+show_bottom_right = false;
+show_top_left = false;
+show_top_right = false;
 
 module recoboard(side)
 {

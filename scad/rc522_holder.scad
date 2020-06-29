@@ -3,6 +3,7 @@ show_rc522_plate = true;
 show_pins_plate = true;
 show_plate_connector = true;
 
+show_complete_assemble = true;
 
 module pin_case()
 {
@@ -402,6 +403,17 @@ module plate_connector_eco()
 }
 
 
+module assembled()
+{
+    pins_plate_eco();
+
+    translate([0,0,plate_thickness + pin_case_height])
+    {
+        rc522_plate_eco();
+    }
+
+}
+
 
 plate_width = 39.2;
 plate_length = 60;
@@ -412,7 +424,7 @@ pins_distance = 2.5;
 pins_area_y_length = 3.5;
 pins_area_x_width = pin_count * pins_distance;
 pin_case_height = 11;
-pins_area_x_offset = (plate_width - pins_area_x_width)/2;
+ = (plate_width - pins_area_x_width)/2;
 
 rc522_lowering = 0.8;
 rc522_plate_connector_offset = 4;
@@ -425,7 +437,7 @@ pc_width = plate_length - plate_width + pins_plate_connector_offset *2;
 pc_length = pins_plate_connector_offset * 2;
 
 
-if(true == show_rc522_plate) 
+if(true == show_rc522_plate && false == show_complete_assemble) 
 {
     if(true == enable_eco) {
         rc522_plate_eco();
@@ -435,7 +447,7 @@ if(true == show_rc522_plate)
 }
 
 
-if(true == show_pins_plate) 
+if(true == show_pins_plate && false == show_complete_assemble) 
 {
     translate([0, plate_length + 10]){
         if(true == enable_eco) {
@@ -447,7 +459,7 @@ if(true == show_pins_plate)
     
 }
 
-if(true == show_plate_connector)
+if(true == show_plate_connector && false == show_complete_assemble)
 {
     translate([0, (plate_length + 10) * 2]){
         if(true == enable_eco) {
@@ -459,3 +471,15 @@ if(true == show_plate_connector)
 
 }
 
+
+if(true == show_complete_assemble){
+
+    for(x = [0:7]) {
+        for(y = [0:7]) {
+            translate([x*60,y*60,0]) {
+                assembled();
+            }
+        }
+    }
+
+}
