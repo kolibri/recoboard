@@ -110,7 +110,7 @@ module recoboard(side)
 
             translate([-1 * wall_width/2, field_width * size, 0]) {
                 difference(){
-                    cube([field_width * size + wall_width, top_y_addition, total_height]);
+                    cube([field_width * size + wall_width/2, top_y_addition, total_height]);
                     
                     translate([wall_width/2, wall_width/2, plate_height])
                         cube([field_width * size, top_y_addition - wall_width, total_height - plate_height]);
@@ -128,7 +128,7 @@ module recoboard(side)
         module wall_bottom()
         {
             translate([-1* wall_width / 2, -1 * wall_width / 2, 0])
-            cube([field_width * size + wall_width, wall_width / 2, total_height]);
+            cube([field_width * size + wall_width / 2, wall_width / 2, total_height]);
         }
 
         module side_bottom_left()
@@ -167,7 +167,7 @@ module recoboard(side)
         module side_top_right()
         {
             wall_right();
-            wall_top();
+            translate([wall_width/2, 0, 0]) wall_top();
 
             translate([0, 0, 0]) expander_mount();
             translate([0, field_width * size / 2, 0]) expander_mount();
@@ -177,7 +177,7 @@ module recoboard(side)
         module side_bottom_right()
         {
             wall_right();
-            wall_bottom();
+            translate([wall_width/2, 0, 0]) wall_bottom();
 
             translate([0, 0, 0]) expander_mount();
             translate([0, field_width * size / 2, 0]) expander_mount();
