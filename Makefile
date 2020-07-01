@@ -9,18 +9,21 @@ create-stls:
 	rm -rf stls
 	mkdir -p stls
 
-	openscad scad/recoboard.scad -o stls/base_a1.stl -D show_ground=true -D show_bottom_left=true
-	openscad scad/recoboard.scad -o stls/base_a8.stl -D show_ground=true -D show_top_left=true
-	openscad scad/recoboard.scad -o stls/base_h1.stl -D show_ground=true -D show_bottom_right=true
-	openscad scad/recoboard.scad -o stls/base_h8.stl -D show_ground=true -D show_top_right=true
-	openscad scad/recoboard.scad -o stls/rc522_a1.stl -D show_rc522=true -D show_bottom_left=true
-	openscad scad/recoboard.scad -o stls/rc522_a8.stl -D show_rc522=true -D show_top_left=true
-	openscad scad/recoboard.scad -o stls/rc522_h1.stl -D show_rc522=true -D show_bottom_right=true
-	openscad scad/recoboard.scad -o stls/rc522_h8.stl -D show_rc522=true -D show_top_right=true
-	openscad scad/recoboard.scad -o stls/top_a1.stl -D show_top=true -D show_bottom_left=true
-	openscad scad/recoboard.scad -o stls/top_a8.stl -D show_top=true -D show_top_left=true
-	openscad scad/recoboard.scad -o stls/top_h1.stl -D show_top=true -D show_bottom_right=true
-	openscad scad/recoboard.scad -o stls/top_h8.stl -D show_top=true -D show_top_right=true
+	openscad scad/recoboard.scad -o stls/base_a1.stl  -D show_ground=true -D show_a1=true
+	openscad scad/recoboard.scad -o stls/base_a8.stl  -D show_ground=true -D show_a8=true
+	openscad scad/recoboard.scad -o stls/base_h1.stl  -D show_ground=true -D show_h1=true
+	openscad scad/recoboard.scad -o stls/base_h8.stl  -D show_ground=true -D show_h8=true
+	openscad scad/recoboard.scad -o stls/rc522_a1.stl -D show_rc522=true  -D show_a1=true
+	openscad scad/recoboard.scad -o stls/rc522_a8.stl -D show_rc522=true  -D show_a8=true
+	openscad scad/recoboard.scad -o stls/rc522_h1.stl -D show_rc522=true  -D show_h1=true
+	openscad scad/recoboard.scad -o stls/rc522_h8.stl -D show_rc522=true  -D show_h8=true
+	openscad scad/recoboard.scad -o stls/top_a1.stl   -D show_top=true    -D show_a1=true
+	openscad scad/recoboard.scad -o stls/top_a8.stl   -D show_top=true    -D show_a8=true
+	openscad scad/recoboard.scad -o stls/top_h1.stl   -D show_top=true    -D show_h1=true
+	openscad scad/recoboard.scad -o stls/top_h8.stl   -D show_top=true    -D show_h8=true
+
+	openscad scad/duponyx.scad -o stls/dupont_case_7.stl   -D count=7    -D solid=20
+	openscad scad/duponyx.scad -o stls/dupont_case_8.stl   -D count=8    -D solid=20
 
 #.PHONY: gcodes
 #gcodes:

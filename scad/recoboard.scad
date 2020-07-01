@@ -5,10 +5,10 @@ show_ground = false;
 show_rc522 = false;
 show_top = false;
 
-show_bottom_left = false;
-show_bottom_right = false;
-show_top_left = false;
-show_top_right = false;
+show_a1 = false;
+show_h1 = false;
+show_a8 = false;
+show_h8 = false;
 
 module recoboard(side)
 {
@@ -16,20 +16,20 @@ module recoboard(side)
     field_width = 60;
     rc522_width = 39.4;
     rc522_height = 5.5;
+    pin_spareout_x_length = 8 * 2.5 + 4;
     plate_height = 1.2;
 
+    pcb_mount = 6;
+    pcb_height = 6;
+    pcb_width = 50.2;
+    pcb_length = 70.5;
+    pcb_screw_d = 2.75;
+    pin_height = 15;
+    cable_corner = 5;
+    wall_width = 4.8;
 
-        pcb_mount = 6;
-        pcb_height = 6;
-        pcb_width = 50.2;
-        pcb_length = 70.5;
-        pcb_screw_d = 2.75;
-        pin_height = 15;
-        cable_corner = 5;
-        ground_height = plate_height + pcb_mount + pcb_height + pin_height + cable_corner;
-        total_height = ground_height + plate_height + rc522_height + plate_height;
-        wall_width = 4.8;
-            inner_walls_height = plate_height + pcb_mount + pcb_height + pin_height + cable_corner;
+    inner_walls_height = plate_height + pcb_mount + pcb_height + pin_height + cable_corner;
+    total_height = inner_walls_height + plate_height + rc522_height + plate_height;
 
     module ground()
     {
@@ -37,8 +37,8 @@ module recoboard(side)
         module mount_screw_hole(height)
         {
             difference(){
-                cylinder(h=height, r=pcb_screw_d + 3, $fn=4);
-                cylinder(h=height, r=pcb_screw_d, $fn=16);
+                cylinder(h=height, d=pcb_screw_d + 3, $fn=4);
+                cylinder(h=height, d=pcb_screw_d, $fn=16);
             }
         }
         module mount_screw_holes(distance_x, distance_y, thickness)
@@ -209,12 +209,13 @@ module recoboard(side)
             difference(){
                 inner_walls();
 
-                translate([field_width / 2, 0, 0]){
-                    cube([field_width, field_width * size, inner_walls_height]);
+                translate([(field_width - pin_spareout_x_length) / 2, 0, 0]){
+                    cube([field_width + pin_spareout_x_length, field_width * size, inner_walls_height]);
                 }
-                translate([2 * field_width + field_width / 2, 0, 0]){
-                    cube([field_width, field_width * size, inner_walls_height]);
+                translate([2 * field_width + ((field_width - pin_spareout_x_length) / 2), 0, 0]){
+                    cube([field_width + pin_spareout_x_length, field_width * size, inner_walls_height]);
                 }
+
                 translate([0, field_width / 2, 0]){
                     cube([field_width * size, field_width, inner_walls_height]);
                 }
@@ -284,7 +285,6 @@ module recoboard(side)
                         
                     }
 
-                    pin_spareout_x_length = 8 * 2.5 + 4;
                     translate([(field_width - pin_spareout_x_length)/2, 0, 0]){
                         cube([pin_spareout_x_length, 3.2, plate_height]);
                     }
@@ -370,9 +370,25 @@ module recoboard(side)
                 translate([0, 0, screw_hole_z]) screw_head_hole();
             }
 
+
+            translate([field_width,     field_width,     plate_height]) { 
+                screw_hole(rc522_height); 
+                translate([0, 0, screw_hole_z - plate_height]) screw_head_hole();
+            }
+            translate([field_width,     field_width * 3, plate_height]) { 
+                screw_hole(rc522_height); 
+                translate([0, 0, screw_hole_z - plate_height]) screw_head_hole();
+            }
+            translate([field_width * 3, field_width,     plate_height]) { 
+                screw_hole(rc522_height); 
+                translate([0, 0, screw_hole_z - plate_height]) screw_head_hole();
+            }
+            translate([field_width * 3, field_width * 3, plate_height]) { 
+                screw_hole(rc522_height); 
+                translate([0, 0, screw_hole_z - plate_height]) screw_head_hole();
+            }
+
         }
-
-
     }
 
     module top()
@@ -474,6 +490,11 @@ module recoboard(side)
             translate([field_width * size - 5, 5,                      screw_hole_z]) screw_head_hole();
             translate([field_width * size - 5, field_width * size - 5, screw_hole_z]) screw_head_hole();
             translate([field_width * size / 2, field_width * size / 2, screw_hole_z]) screw_head_hole();
+
+            translate([field_width,     field_width,     screw_hole_z]) screw_head_hole();
+            translate([field_width,     field_width * 3, screw_hole_z]) screw_head_hole();
+            translate([field_width * 3, field_width,     screw_hole_z]) screw_head_hole();
+            translate([field_width * 3, field_width * 3, screw_hole_z]) screw_head_hole();
         }
     }
 
@@ -511,22 +532,22 @@ module recoboard(side)
     }
 }
 
-if(true == show_bottom_left) {
+if(true == show_a1) {
     translate([-60*4 - xy_distance, -60*4 - xy_distance])
         recoboard(1);
 }
 
-if(true == show_bottom_right) {
+if(true == show_h1) {
     translate([xy_distance, -60*4 - xy_distance])
         recoboard(4);
 }
 
-if(true == show_top_left) {
+if(true == show_a8) {
     translate([-60*4 -xy_distance, xy_distance])
         recoboard(2);
 }
 
-if(true == show_top_right) {
+if(true == show_h8) {
     translate([xy_distance, xy_distance])
         recoboard(3);
 }
